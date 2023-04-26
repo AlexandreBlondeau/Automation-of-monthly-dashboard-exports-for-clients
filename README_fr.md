@@ -79,15 +79,15 @@ Le programme lira les valeurs de la colonne M et les traitera itérativement, en
 **Problèmes connus**  
 
 - Ne pas changer le nom du fichier Excel original situé dans le disque « X:\ », car le script ne sera alors pas capable de le retrouver.
-- **Le code effectue beaucoup de requêtes à un serveur distant via «workbook.RefreshAll() » , il arrive donc que le Firewall bloque les requêtes au bout d’un certain nombre d’itérations et que les erreurs suivantes apparaissent dans le GUI :
+- Le code effectue beaucoup de requêtes à un serveur distant via «workbook.RefreshAll() » , il arrive donc que le Firewall bloque les requêtes au bout d’un certain nombre d’itérations et que les erreurs suivantes apparaissent dans le GUI :
   * Erreur de l’actualisation des données (-2147023170, ‘Echec de l’appel de la procédure distante.’, None, None)
   * Erreur de communication avec Excel : (-2147023174, ‘Le serveur RPC n’est pas disponible.’, None, None)
 
 J’ai rajouté à la fin de ce document une partie Annexe où j’explique comment régler ce problème à l’équipe IT. Si vous n’avez pas encore résolu ce problème, fermez le script puis vérifiez si Excel est bien fermé dans le gestionnaire de tâche. Puis ressayer le script un peu plus tard à l’itération où cela s’est arrêté via le GUI.
 Assurez-vous que le fichier Excel copié dans le chemin original n’est pas ouvert sur un autre ordinateur du réseau pendant l'exécution du programme, car cela peut entraîner des problèmes de verrouillage de fichier et cela pourra empêcher la copie du fichier sur le disque local « C:\ ».
-Si vous rencontrez des erreurs de communication avec Excel, le programme attendra et réessaiera automatiquement. Cela peut être dû à des problèmes de connexion avec Excel ou à des problèmes de synchronisation.**
+Si vous rencontrez des erreurs de communication avec Excel, le programme attendra et réessaiera automatiquement. Cela peut être dû à des problèmes de connexion avec Excel ou à des problèmes de synchronisation.
 
-**Annexe :**  
+**Annexe**  
 
 1. Ouvrez le pare-feu Windows.
    Autorisez l'application ou la fonction à travers le pare-feu Windows.
