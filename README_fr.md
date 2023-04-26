@@ -1,4 +1,6 @@
-# README
+# README - Version Française
+
+[Version anglaise](README_en.md)
 
 ## **Projet :** Automatisation des exportations mensuelles de tableaux de bord pour des clients, avec une interface utilisateur graphique responsive
 
