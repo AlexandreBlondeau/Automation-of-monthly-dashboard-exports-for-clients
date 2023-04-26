@@ -1,4 +1,4 @@
-# README - Version Française
+# README - French Version
 
 [Version anglaise](README_en.md)
 
