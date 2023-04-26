@@ -1,6 +1,6 @@
-# README – Automatisation des exportations mensuelles de tableaux de bord pour des clients, avec une interface utilisateur graphique responsive
+# README
 
-## **Projet :** Automatisation des exportations de tableaux de bord mensuels avec une interface utilisateur graphique responsive  
+## **Projet :** Automatisation des exportations mensuelles de tableaux de bord pour des clients, avec une interface utilisateur graphique responsive
 
 ### **Auteur :** Alexandre Blondeau - [alex991@live.fr](mailto:alex991@live.fr) - [GitHub](https://github.com/AlexandreBlondeau)  
 
