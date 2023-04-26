@@ -87,7 +87,7 @@ I added at the end of this document an appendix where I explain how to solve thi
 Make sure that the Excel file copied to the original path is not open on another computer on the network while the program is running, as this can cause file locking problems and may prevent the file from being copied to the local "C:³" drive.
 If you encounter communication errors with Excel, the program will wait and retry automatically. This may be due to connection problems with Excel or synchronization problems.
 
-**Appendix:**  
+**Appendix**  
 
 1. Open the Windows Firewall.
    Authorize the application or function through the Windows Firewall.
