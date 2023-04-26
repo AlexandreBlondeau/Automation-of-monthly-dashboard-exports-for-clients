@@ -1,6 +1,6 @@
 # README - English version
 
-[French Version](README_fr.md)
+[Link to the French version](README_fr.md)
 
 ## **Project :** Automation of monthly dashboard exports for clients, with a responsive graphical user interface
 
