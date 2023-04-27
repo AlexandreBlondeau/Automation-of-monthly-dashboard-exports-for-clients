@@ -59,7 +59,8 @@ Ce programme utilise les bibliothèques suivantes :
 - pythoncom
 - tkinter
 
-Pour installer les dépendances manquantes, vous pouvez utiliser la commande pip. (Pas besoin si vous utilisez le fichier .exe qui est fourni).
+Pour installer les dépendances manquantes, vous pouvez utiliser la commande pip. (Pas besoin si vous utilisez le fichier .exe qui est fourni).  
+
 python -m pip install XXXX
 
 
