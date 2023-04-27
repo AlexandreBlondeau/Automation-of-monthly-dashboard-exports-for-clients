@@ -364,5 +364,4 @@ def second_part(start_iteration):
             excel.Quit()  # Fermer Excel
 
 if __name__ == "__main__":
-    create_gui()
-
+    create_gui()  
