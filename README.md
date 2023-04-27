@@ -4,7 +4,7 @@
 
 ### **Auteur :** Alexandre Blondeau - [alex991@live.fr](mailto:alex991@live.fr) - [GitHub](https://github.com/AlexandreBlondeau)  
 
-*Ce [script](Script.py) python effectue les actions suivantes :*
+**Ce [script](Script.py) python effectue les actions suivantes :**
 
 #### **I.**  
 
