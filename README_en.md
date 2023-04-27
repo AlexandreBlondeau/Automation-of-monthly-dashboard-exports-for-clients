@@ -59,7 +59,8 @@ This program uses the following libraries:
 - pythoncom
 - tkinter
 
-To install the missing dependencies, you can use the pip command. (No need if you use the .exe file that is provided).
+To install the missing dependencies, you can use the pip command. (No need if you use the .exe file that is provided).  
+
 python -m pip install XXXX
 
 
