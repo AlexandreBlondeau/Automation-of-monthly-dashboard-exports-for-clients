@@ -355,14 +355,13 @@ def second_part(start_iteration):
 
         # Vérifier si c'est la dernière itération
         if last_iteration:
-            print(f"Dernière itération")
+            sys.stdout.insert_colored_text(f"L'exécution du Script est terminée, vous pouvez fermer l'interface GUI en cliquant sur la croix\n", "red", bold=True)
             break
 
             # Fermer Excel si c'était la dernière itération
         if last_iteration:
             workbook.Close(SaveChanges=False)  # Fermer le classeur sans enregistrer les modifications
             excel.Quit()  # Fermer Excel
-            sys.stdout.insert_colored_text(f"L'exécution du Script est terminée, vous pouvez fermer l'interface GUI en cliquant sur la croix\n", "red", bold=True)
 
 if __name__ == "__main__":
     create_gui()
