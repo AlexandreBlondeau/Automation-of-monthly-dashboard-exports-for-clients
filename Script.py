@@ -13,7 +13,7 @@ import threading
 def get_values_to_skip(worksheet):
     # Initialiser une liste vide pour stocker les valeurs à exclure
     values_to_skip = []
-    # Initialiser l'index de la cellule à 2 (la valeur par défaut 2 est modifiable via le GUI)
+    # Initialiser l'index de la cellule à 2 (pour commencer à la cellule O2, cette cellule est modifiable dans le GUI
     i = 2
     # Boucler indéfiniment jusqu'à ce qu'une condition d'arrêt soit rencontrée
     while True:
@@ -303,7 +303,7 @@ def second_part(start_iteration):
 
         # Vérifier si la valeur de la cellule suivante et celle d'après sont None ou vides,
         # si c'est le cas, marquer comme dernière itération
-        if (next_cell_value is None or next_cell_value == "" or values_to_skip) and (
+        if (next_cell_value is None or next_cell_value == "" or next_cell_value in values_to_skip) and (
                 next_next_cell_value is None or next_next_cell_value == ""):
             last_iteration = True
             print(f"Dernière itération")
@@ -365,3 +365,4 @@ def second_part(start_iteration):
 
 if __name__ == "__main__":
     create_gui()  
+    
