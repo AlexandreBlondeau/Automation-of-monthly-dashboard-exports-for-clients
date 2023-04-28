@@ -36,8 +36,8 @@ La fonction « second_part » prend en entrée un paramètre start_iteration, qu
 12. Copie la valeur de la cellule Mi dans la cellule fusionnée "B1:C1".
 13. Vérifie si la valeur de la cellule en cours doit être exclue et passe à la cellule suivante si c'est le cas.
 14. Affiche un message indiquant le début de l'itération et la cellule Mi utilisée.
-15. Lit la valeur de la cellule suivante dans la colonne M et la valeur de la cellule après la cellule suivante.
-16. Marque l'itération comme dernière itération si la cellule suivante est vide ou None ou dans les valeurs à exclure et si la cellule d’encore après est vide ou None.
+15. Incrémente l'indice i et lit la valeur de la cellule suivante dans la colonne M. Parcours ensuite les cellules de la colonne M jusqu'à trouver une cellule non exclue ou vide.
+16. Marque l'itération comme dernière itération si la cellule trouvée est vide ou None. Sinon, continue avec la prochaine itération.
 17. Affiche un message indiquant l'itération en cours pour le client concerné.
 18. Actualise toutes les données du fichier Excel et attend que l'actualisation soit terminée.
 19. Exécute la macro "Publication" et attend que la publication du fichier PDF soit terminée.
