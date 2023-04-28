@@ -248,8 +248,6 @@ def second_part(start_iteration):
     file_path = r'X:\CLIENTS\DIVERS\Reportings Mensuels\NEW TBM EQ Exoé 2022_Template_avec_limites.xlsm'
     destination_folder = "C:\\TBM\\NEW TBM EQ Exoé 2022_Template_avec_limites.xlsm"
 
-    # Initialiser le drapeau last_iteration
-    last_iteration = False
 
     i = start_iteration
     while True:  # Effectuer la tâche pour les cellules de M2 jusqu'à ce qu'il n'y ait plus de valeur alphanumérique
@@ -294,19 +292,21 @@ def second_part(start_iteration):
 
         sys.stdout.insert_colored_text(f"Début de l'itération qui utilise la cellule M{i}\n", "black", bold=True)
 
-        # Lire la valeur de la cellule suivante dans la colonne M
+        # Trouver la prochaine cellule non exclue ou vide dans la colonne M
         i += 1
         next_cell_value = worksheet.Range(f"M{i}").Value
 
-        # Lire la valeur de la cellule après la cellule suivante dans la colonne M
-        next_next_cell_value = worksheet.Range(f"M{i + 1}").Value
+        # Parcourir les cellules jusqu'à trouver une cellule non exclue ou vide
+        while next_cell_value in values_to_skip:
+            i += 1
+            next_cell_value = worksheet.Range(f"M{i}").Value
 
-        # Vérifier si la valeur de la cellule suivante et celle d'après sont None ou vides,
-        # si c'est le cas, marquer comme dernière itération
-        if (next_cell_value is None or next_cell_value == "" or next_cell_value in values_to_skip) and (
-                next_next_cell_value is None or next_next_cell_value == ""):
+        # Vérifier si la cellule trouvée est vide
+        if next_cell_value is None or next_cell_value == "":
             last_iteration = True
-            print(f"Dernière itération")
+            print("Dernière itération")
+        else:
+            last_iteration = False
 
         sys.stdout.insert_colored_text(f"Itération pour le client {cell_value}\n", "red", bold=True)
 
@@ -321,7 +321,8 @@ def second_part(start_iteration):
             wait_for_sheets_to_refresh(excel)
         except Exception as e:
             print(e)
-            print("Variable x is not defined")
+            sys.stdout.insert_colored_text(f"Vérifiez le fichier PDF, il y a peut-être eu un souci dans "
+                                           f"l'actualisation pour ce client.\n", "blue", bold=True)
         finally:
             print("The 'try except' is finished")
         # Exécuter la macro "Publication"
@@ -355,7 +356,8 @@ def second_part(start_iteration):
 
         # Vérifier si c'est la dernière itération
         if last_iteration:
-            sys.stdout.insert_colored_text(f"L'exécution du Script est terminée, vous pouvez fermer l'interface GUI en cliquant sur la croix\n", "red", bold=True)
+            sys.stdout.insert_colored_text(f"L'exécution du Script est terminée, vous pouvez fermer "
+                                           f"l'interface GUI en cliquant sur la croix\n", "red", bold=True)
             break
 
             # Fermer Excel si c'était la dernière itération
