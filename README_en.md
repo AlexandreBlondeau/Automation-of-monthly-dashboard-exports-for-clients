@@ -36,8 +36,8 @@ The "second_part" function takes as input a start_iteration parameter, which det
 12. Copy the value of cell Mi to the merged cell "B1:C1".
 13. Checks if the value of the current cell should be excluded and moves to the next cell if it is.
 14. Displays a message indicating the start of the iteration and the cell Mi used.
-15. Reads the value of the next cell in the M column and the value of the cell after the next cell.
-16. Marks the iteration as the last iteration if the next cell is empty or None or in the values to exclude and if the cell after it is empty or None.
+15. Increment the index i and read the value of the next cell in column M. Then browse the cells in column M until you find a non-excluded or empty cell.
+16. Marks the iteration as the last iteration if the found cell is empty or None. Otherwise, continue with the next iteration.
 17. Displays a message indicating the current iteration for the client concerned.
 18. Refreshes all data in the Excel file and waits for the refresh to be completed.
 19. Runs the "Publish" macro and waits for the PDF file to be published.
