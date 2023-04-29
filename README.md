@@ -83,7 +83,7 @@ Le programme lira les valeurs de la colonne M et les traitera itérativement, en
   * Erreur de communication avec Excel : (-2147023174, ‘Le serveur RPC n’est pas disponible.’, None, None)
 
 J’ai rajouté à la fin de ce document une partie Annexe où j’explique comment régler ce problème à l’équipe IT. Si vous n’avez pas encore résolu ce problème, fermez le script puis vérifiez si Excel est bien fermé dans le gestionnaire de tâche. Puis ressayer le script un peu plus tard à l’itération où cela s’est arrêté via le GUI.  
-Assurez-vous que le fichier Excel copié dans le chemin original n’est pas ouvert sur un autre ordinateur du réseau pendant l'exécution du programme, car cela peut entraîner des problèmes de verrouillage de fichier et cela pourra empêcher la copie du fichier sur le disque local « C:\ ».
+- Assurez-vous que le fichier Excel copié dans le chemin original n’est pas ouvert sur un autre ordinateur du réseau pendant l'exécution du programme, car cela peut entraîner des problèmes de verrouillage de fichier et cela pourra empêcher la copie du fichier sur le disque local « C:\ ».
 Si vous rencontrez des erreurs de communication avec Excel, le programme attendra et réessaiera automatiquement. Cela peut être dû à des problèmes de connexion avec Excel ou à des problèmes de synchronisation.
 
 **Annexe**  
