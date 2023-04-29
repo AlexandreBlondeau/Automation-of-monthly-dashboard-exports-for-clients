@@ -40,7 +40,7 @@ La fonction « second_part » prend en entrée un paramètre start_iteration, qu
 16. Marque l'itération comme dernière itération si la cellule trouvée est vide ou None. Sinon, continue avec la prochaine itération.
 17. Affiche un message indiquant l'itération en cours pour le client concerné.
 18. Actualise toutes les données du fichier Excel et attend que l'actualisation soit terminée.
-19. Exécute la macro "Publication" et attend que la publication du fichier PDF soit terminée.
+19. Exécute la macro VBA "Publication" et attend que la publication du fichier PDF soit terminée.
 20. Ferme l'application Excel en effectuant deux tentatives maximum.
 21. Supprime le fichier Excel créé dans le dossier "C:\TBM".
 22. Vérifie si c'est la dernière itération. Si c'est le cas, affiche un message indiquant la fin des itérations et quitte la boucle while.
