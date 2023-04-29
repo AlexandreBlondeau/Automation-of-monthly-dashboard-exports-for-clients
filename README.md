@@ -32,7 +32,7 @@ La fonction « second_part » prend en entrée un paramètre start_iteration, qu
 8. Copie le fichier Excel source dans le dossier de destination pour effectuer les actions suivantes en local sur le disque "C:\".
 9. Lance l'application Excel en mode invisible, désactive les alertes Excel et ouvre le fichier copié en mode lecture/écriture.
 10. Sélectionne la feuille "Paramètres et Instructions" du fichier Excel.
-11. Récupère les valeurs à exclure lors de la première itération (qui est défine par l'utilisateur dans le GUI.
+11. Récupère les valeurs à exclure lors de la première itération (qui est défine par l'utilisateur dans le GUI).
 12. Copie la valeur de la cellule Mi dans la cellule fusionnée "B1:C1".
 13. Vérifie si la valeur de la cellule en cours doit être exclue et passe à la cellule suivante si c'est le cas.
 14. Affiche un message indiquant le début de l'itération et la cellule Mi utilisée.
