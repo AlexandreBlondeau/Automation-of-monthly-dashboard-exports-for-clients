@@ -13,7 +13,7 @@ import threading
 def get_values_to_skip(worksheet):
     # Initialiser une liste vide pour stocker les valeurs à exclure
     values_to_skip = []
-    # Initialiser l'index de la cellule à 2 (pour commencer à la cellule O2, cette cellule est modifiable dans le GUI
+    # Initialiser l'index de la cellule à 2 (pour commencer à la cellule O2, cette cellule est modifiable dans le GUI)
     i = 2
     # Boucler indéfiniment jusqu'à ce qu'une condition d'arrêt soit rencontrée
     while True:
