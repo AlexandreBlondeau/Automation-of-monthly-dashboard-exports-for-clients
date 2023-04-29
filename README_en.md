@@ -32,7 +32,7 @@ The "second_part" function takes as input a start_iteration parameter, which det
 8. Copies the source Excel file to the destination folder to perform the following actions locally on the "C:³" drive.
 9. Launches the Excel application in invisible mode, disables Excel alerts and opens the copied file in read/write mode.
 10. Select the "Settings and Instructions" sheet of the Excel file.
-11. Retrieves the values to be excluded during the first iteration (which is defined by the user in the GUI.
+11. Retrieves the values to be excluded during the first iteration (which is defined by the user in the GUI).
 12. Copy the value of cell Mi to the merged cell "B1:C1".
 13. Checks if the value of the current cell should be excluded and moves to the next cell if it is.
 14. Displays a message indicating the start of the iteration and the cell Mi used.
