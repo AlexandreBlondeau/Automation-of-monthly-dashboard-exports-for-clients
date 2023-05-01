@@ -77,7 +77,7 @@ The program will read the values in column M and process them iteratively, exclu
 
 **Known problems**  
 
-- Do not change the name of the original Excel file located in the "X:³" drive, as the script will not be able to find it.
+- Do not change the name of the original Excel file located in the "X:\" drive, as the script will not be able to find it.
 - The code makes a lot of requests to a remote server via "workbook.RefreshAll()", so the Firewall may block the requests. The code makes a lot of requests to a remote server via "workbook.RefreshAll()", so the firewall may block the requests after a certain number of iterations and the following errors may appear in the GUI:
   * Data refresh error (-2147023170, 'Failed to call remote procedure.', None, None)
   * Communication error with Excel: (-2147023174, 'The RPC server is not available.', None, None)
