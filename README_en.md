@@ -73,7 +73,7 @@ Run the file Export_Client_.py to start the program.
 
 2. The user interface will appear, indicating the cell where the first iteration starts. By default, this is cell M2.
 Enter the desired starting cell and click "Start Script".
-The program will read the values from column M and process them iteratively, generating and exporting PDF files.
+The program will read the values in column M and process them iteratively, excluding the values in column O, then generate and export PDF files.
 
 **Known problems**  
 
