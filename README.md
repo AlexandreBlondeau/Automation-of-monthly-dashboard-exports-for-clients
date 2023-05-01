@@ -73,7 +73,7 @@ Exécutez le fichier Export_Client_.py pour démarrer le programme.
 
 2. L'interface utilisateur apparaîtra, indiquant la cellule où la première itération commence. Par défaut, il s'agit de la cellule M2.
 Entrez la cellule de départ souhaitée et cliquez sur "Démarrer le script".
-Le programme lira les valeurs de la colonne M et les traitera itérativement, en générant et en exportant des fichiers PDF.
+Le programme lira les valeurs de la colonne M et les traitera itérativement, en excluant les valeurs présentes dans la colonne O, puis générera et exportera des fichiers PDF.
 
 **Problèmes connus**  
 
