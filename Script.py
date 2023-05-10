@@ -11,24 +11,24 @@ from tkinter import scrolledtext
 import threading
 
 def get_values_to_skip(worksheet):
-    # Initialiser une liste vide pour stocker les valeurs à exclure
+    # Initialize an empty list to store the values to be excluded
     values_to_skip = []
-    # Initialiser l'index de la cellule à 2 (pour commencer à la cellule O2, cette cellule est modifiable dans le GUI)
+    # Initialise the cell index to 2 (to start at cell O2, this cell is editable in the GUI)
     i = 2
-    # Boucler indéfiniment jusqu'à ce qu'une condition d'arrêt soit rencontrée
+    # Loop indefinitely until a stop condition is met
     while True:
         cell_value = worksheet.Range(f"O{i}").Value
-        # Vérifier si la valeur de la cellule est None ou vide, si c'est le cas, sortir de la boucle
+        # Check if the cell value is None or empty, if so, exit the loop
         if cell_value is None or cell_value == "":
             break
-        # Ajouter la valeur de la cellule à la liste des valeurs à exclure
+        # Add the value of the cell to the list of values to exclude
         values_to_skip.append(cell_value)
-        # Augmenter l'index de la cellule pour passer à la cellule suivante
+        # Increase the cell index to move to the next cell
         i += 1
-    # Retourner la liste des valeurs à exclure
+    # Return the list of values to exclude
     return values_to_skip
 
-# Attend que toutes les requêtes asynchrones d'Excel soient terminées
+# Waits for all asynchronous Excel queries to finish
 def wait_for_sheets_to_refresh(excel):
     excel.Application.CalculateUntilAsyncQueriesDone()
 
@@ -36,66 +36,66 @@ def wait_for_sheets_to_refresh(excel):
 def attendre_excel(excel):
     while True:
         try:
-            # Vérifier si Excel est interactif (c'est-à-dire prêt à être utilisé)
+            # Check if Excel is interactive (i.e. ready to use)
             if excel.Interactive is False:
-                time.sleep(1)  # Attendre 1 seconde avant de vérifier à nouveau
+                time.sleep(1)   # Wait 1 second before checking again
             else:
-                break # Quitte la boucle si Excel est interactif (c'est-à-dire prêt à être utilisé)
-        # Attraper les erreurs de communication avec Excel
+                break # Exits the loop if Excel is interactive (i.e. ready to be used)
+        # Catching communication errors with Excel
         except pywintypes.com_error as e:
             print(f"Erreur de communication avec Excel: {e}")
-            time.sleep(1)  # Attendre 1 seconde avant de réessayer
+            time.sleep(1)  # Wait 1 second before trying again
 
-# Définition de la fonction `fermer_excel`
+# Definition of the `close_excel` function
 def fermer_excel():
-    # Initialise une variable pour suivre si Excel a été fermé ou non
+    # Initializes a variable to track whether or not Excel has been closed
     excel_ferme = False
 
-    # Parcourir la liste des processus en cours d'exécution
+    # Browse the list of running processes
     for process in psutil.process_iter():
         try:
-            # Récupère les informations du processus (ID et nom)
+            # Retrieves the process information (ID and name)
             process_info = process.as_dict(attrs=['pid', 'name'])
 
-            # Vérifie si le processus est Excel
+            # Checks if the process is Excel
             if process_info['name'] == 'EXCEL.EXE':
-                # Termine le processus Excel
+                # Kill the Excel process
                 os.kill(process_info['pid'], 9)
-                # Met à jour la variable pour indiquer qu'Excel a été fermé
+                # Updates the variable to indicate that Excel has been closed
                 excel_ferme = True
-                # Quitte la boucle
+                # Exit the loop
                 break
 
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            # Ignore les exceptions et continue la boucle pour vérifier les autres processus
+            # Ignores exceptions and continues the loop to check other processes
             pass
 
     if not excel_ferme:
-        # Retourne False si Excel n'a pas été fermé
+        # Returns False if Excel has not been closed
         return False
 
-    # Retourne True si Excel a été fermé
+    # Returns True if Excel has been closed
     return excel_ferme
 
 class TextRedirector:
-    # Initialise l'objet TextRedirector avec un widget et des attributs pour gérer les messages répétés
+    # Initializes the TextRedirector object with a widget and attributes to handle repeated messages
     def __init__(self, widget):
         self.widget = widget
         self.last_text = None
         self.repeat_count = 1
 
     def write(self, text):
-        # Écrit le texte donné dans le widget en regroupant les messages répétés
+        # Writes the text given in the widget by grouping repeated messages
         text = text.strip()
 
-        # Ajout d'une condition pour détecter les messages d'erreur spécifiques
+        # Add a condition to detect specific error messages
         is_error_message = "Erreur de communication avec Excel" in text
 
         if text == self.last_text or is_error_message:
             self.repeat_count += 1
-            # Supprimer le dernier message affiché
+            # Delete the last message displayed
             self.widget.after_idle(lambda: self.widget.delete("end-2l", "end-1c"))
-            # Afficher le message mis à jour avec le compteur
+            # Display the updated message with the counter
             self.widget.after_idle(lambda: self.widget.insert(tk.END, f"{text} x{self.repeat_count}\n"))
         else:
             self.repeat_count = 1
@@ -105,126 +105,126 @@ class TextRedirector:
         self.last_text = text
 
     def flush(self):
-        # Cette méthode est présente pour la compatibilité avec sys.stdout mais n'a pas d'effet réel
+        # This method is present for compatibility with sys.stdout but has no real effect
         pass
 
     def insert_colored_text(self, text, color, bold=False):
-        # Insère du texte coloré dans le widget avec la possibilité de le rendre gras
+        # Inserts coloured text in the widget with the possibility to make it bold
         tag_name = color + ("_bold" if bold else "")
         self.widget.tag_configure(tag_name, foreground=color, font=("TkDefaultFont", 10, "bold" if bold else "normal"))
         self.widget.after_idle(lambda: self.widget.insert(tk.END, text, (tag_name,)))
         self.widget.after_idle(lambda: self.widget.see(tk.END))
 
-# Première partie: le GUI
+# Part 1: the GUI
 def create_gui():
     def execute_second_part():
-        # Récupération de la valeur entrée par l'utilisateur
+        # Recovery of the value entered by the user
         user_input = entry.get()
 
-        # Conversion de la valeur entrée en entier
+        # Convert the input value to an integer
         user_iteration = int(user_input)
 
-        # Création d'un thread pour exécuter la deuxième partie du script
+        # Creating a thread to execute the second part of the script
         second_part_thread = threading.Thread(target=second_part, args=(
         user_iteration,))
         second_part_thread.start()
 
     def check_entry_value(value):
-        # Vérifie si la valeur est vide
+        # Checks if the value is empty
         if not value:
-            # Désactive le bouton "Démarrer le script"
+            # Disables the "Start Script" button
             start_button.configure(state="disabled")
-            # Autorise la modification de la valeur dans le champ d'entrée
+            # Allows the value in the input field to be changed
             return True
 
         try:
-            # Tente de convertir la valeur en entier
+            # Tries to convert the value to an integer
             number = int(value)
-            # Vérifie si la valeur est supérieure ou égale à 2
+            # Checks if the value is greater than or equal to 2
             if number >= 2:
-                # Active le bouton "Démarrer le script"
+                # Activates the "Start Script" button
                 start_button.configure(state="normal")
             else:
-                # Désactive le bouton "Démarrer le script"
+                # Disables the "Start Script" button
                 start_button.configure(state="disabled")
-            # Autorise la modification de la valeur dans le champ d'entrée
+            # Allows the value in the input field to be changed
             return True
-        # Attrape l'exception si la conversion en entier échoue
+        # Catch the exception if the conversion to integer fails
         except ValueError:
-            # Désactive le bouton "Démarrer le script"
+            # Disables the "Start Script" button
             start_button.configure(state="disabled")
-            # Interdit la modification de la valeur dans le champ d'entrée
+            # Prohibits the modification of the value in the input field
             return False
 
-    # Création du GUI (qui est responsive)
-    # Crée un nouvel objet Tk, qui représente la fenêtre principale de l'application
+    # Creation of the GUI (which is responsive)
+    # Creates a new Tk object, which represents the main window of the application
     root = tk.Tk()
-    # Définit le titre de la fenêtre principale
+    # Sets the title of the main window
     root.title("Automatisation Export TBM EQ Excel")
 
-    # Configure la largeur de la première colonne pour qu'elle s'adapte à la fenêtre
+    # Sets the width of the first column to fit the window
     root.columnconfigure(0, weight=1)
-    # Configure la hauteur de la première ligne pour qu'elle s'adapte à la fenêtre
+    # Sets the height of the first line to fit the window
     root.rowconfigure(0, weight=1)
 
-    # Crée un nouveau cadre (Frame) pour organiser les widgets à l'intérieur de la fenêtre principale
+    # Creates a new frame to organise the widgets inside the main window
     frame = tk.Frame(root)
-    # Positionne le cadre dans la fenêtre principale
+    # Positions the frame in the main window
     frame.grid(row=0, column=0, sticky='nsew')
-    # Configure la largeur de la deuxième colonne du cadre pour qu'elle s'adapte à la fenêtre
+    # Sets the width of the second column of the frame to fit the window
     frame.columnconfigure(1, weight=1)
-    # Configure la hauteur de la première ligne du cadre pour qu'elle s'adapte à la fenêtre
+    # Sets the height of the first line of the frame to fit the window
     frame.rowconfigure(0, weight=1)
 
     global text
-    # Crée un widget de texte déroulant pour afficher les informations
+    # Creates a drop-down text widget to display the information
     text = scrolledtext.ScrolledText(frame, wrap="word")
-    # Positionne le widget de texte déroulant dans le cadre
+    # Positions the scrolling text widget in the frame
     text.grid(row=0, column=0, columnspan=3, rowspan=3, sticky='nsew', padx=5, pady=5)
 
-    # Rediriger les sorties stdout vers le widget text
+    # Redirect stdout output to the text widget
     stdout_redirector = TextRedirector(text)
     sys.stdout = stdout_redirector
 
-    # Définir le texte à afficher sur le label
+    # Define the text to be displayed on the label
     label_text = "Cellule où la première itération commence (Default=2 pour la cellule M2)"
-    # Créer un label avec le texte défini précédemment et une largeur maximale de 300 pixels pour le texte
+    # Create a label with the previously defined text and a maximum width of 300 pixels for the text
     iteration_label = tk.Label(frame, text=label_text, wraplength=300)
-    # Positionner le label dans la grille du conteneur (frame) à la ligne 1 et colonne 3, avec un padding de 5 pixels autour
+    # Position the label in the frame grid at row 1 and column 3, with a padding of 5 pixels around it
     iteration_label.grid(row=1, column=3, padx=5, pady=5, sticky='n')
 
-    # Création d'un champ de texte (Entry) pour l'utilisateur
+    # Creation of a text field (Entry) for the user
     entry = tk.Entry(frame)
     entry.grid(row=2, column=3, padx=5, pady=5, sticky='n')
 
-    # Création d'un bouton "Démarrer le script" pour exécuter la deuxième partie
+    # Creating a "Start Script" button to run the second part
     start_button = tk.Button(frame, text="Démarrer le script", command=execute_second_part)
     start_button.grid(row=0, column=3, padx=5, pady=5, sticky='n')
 
-    # Créez un validatecommand et liez-le à la fonction check_entry_value
+    # Create a validatecommand and link it to the check_entry_value function
     validate_cmd = frame.register(check_entry_value)
 
-    # Création d'un champ de texte (Entry) pour l'utilisateur
+    # Creation of a text field (Entry) for the user
     entry = tk.Entry(frame, validate="key", validatecommand=(validate_cmd, '%P'))
     entry.grid(row=2, column=3, padx=5, pady=5, sticky='n')
 
-    # Ajoutez la valeur par défaut 2 dans le champ d'entrée
+    # Add the default value 2 to the input field
     entry.insert(0, "2")
     entry.focus_set()  # Met le focus sur l'entrée pour éviter de devoir cliquer dessus avant de modifier la valeur
 
-    # Activez le bouton "start_button" par défaut, car la valeur par défaut est 2
+    # Enable the "start_button" by default, as the default value is 2
     start_button = tk.Button(frame, text="Démarrer le script", command=execute_second_part, state="normal")
     start_button.grid(row=0, column=3, padx=5, pady=5, sticky='n')
 
-    # Démarre la boucle principale d'événements de l'application
+    # Starts the main event loop of the application
     root.mainloop()
 
-# Seconde partie: le script appelé via le GUI
+# Second part: the script called via the GUI
 def second_part(start_iteration):
     pythoncom.CoInitialize()
     chemin_fichier = r"C:\TBM\NEW TBM EQ Exoé 2022_Template_avec_limites.xlsm"
 
-    # Vérifier si le fichier existe déjà et le supprimer si c'est le cas
+    # Check if the file already exists and delete it if it does
     if os.path.isfile(chemin_fichier):
         try:
             os.remove(chemin_fichier)
@@ -234,56 +234,56 @@ def second_part(start_iteration):
     else:
         print(f"Le fichier '{chemin_fichier}' n'existe pas.")
 
-    # Fermer Excel
+    # Close Excel
     excel_ferme = False
     attempt = 0
     while not excel_ferme and attempt < 2:
         excel_ferme = fermer_excel()
         attempt += 1
-        time.sleep(2)  # Attendre 5 secondes avant de vérifier à nouveau
+        time.sleep(2)  # Wait 2 seconds before checking again
 
     if not excel_ferme:
-        print("Impossible de fermer Excel après 2 tentatives ou Excel n'était pas ouvert")
+        print("Could not close Excel after 2 attempts or Excel was not open")
 
     file_path = r'X:\CLIENTS\DIVERS\Reportings Mensuels\NEW TBM EQ Exoé 2022_Template_avec_limites.xlsm'
     destination_folder = "C:\\TBM\\NEW TBM EQ Exoé 2022_Template_avec_limites.xlsm"
 
 
     i = start_iteration
-    while True:  # Effectuer la tâche pour les cellules de M2 jusqu'à ce qu'il n'y ait plus de valeur alphanumérique
+    while True:  # Perform the task for the cells in M2 until there are no more alphanumeric values
 
-        # Définition chemin création dossier
+        # File creation path definition
         chemin = "C:\\TBM"
 
-        # Vérifier si le dossier "TBM" existe
+        # Check if the folder "TBM" exists
         if not os.path.exists(chemin):
             # Si le dossier n'existe pas, le créer
             os.makedirs(chemin)
         else:
             print("Le dossier 'TBM' existe déjà.")
 
-        # Copier le fichier Excel dans le dossier "TBM"
+        # Copy the Excel file to the "TBM" folder
         shutil.copy(file_path, destination_folder)
         print(f"Fichier copié à l'emplacement: {destination_folder}")
 
-        # Lancer Excel et ouvrir le fichier
+        # Launch Excel and open the file
         excel = win32com.client.Dispatch("Excel.Application")
         excel.Visible = False
         excel.DisplayAlerts = False  # Désactiver les alertes Excel
         workbook = excel.Workbooks.Open(destination_folder, ReadOnly=False)
 
-        # Sélectionner la feuille « Paramètres et Instructions »
+        # Select the "Settings and Instructions" sheet
         worksheet = workbook.Sheets("Paramètres et Instructions")
 
-        # Récupérer les valeurs à exclure lors de la première itération
+        # Retrieve values to exclude in the first iteration
         if i == start_iteration:
             values_to_skip = get_values_to_skip(worksheet)
 
-        # Copier la cellule Mi dans la cellule qui est fusionner « B1:C1 »
+        # Copy cell Mi into the cell that is being merged "B1:C1"
         cell_to_copy = f"M{i}"
         cell_value = worksheet.Range(cell_to_copy).Value
 
-        # Vérifier si la valeur de la cellule en cours doit être exclue
+        # Check if the value of the current cell should be excluded
         while cell_value in values_to_skip:
             i += 1
             cell_value = worksheet.Range(f"M{i}").Value
@@ -292,16 +292,16 @@ def second_part(start_iteration):
 
         sys.stdout.insert_colored_text(f"Début de l'itération qui utilise la cellule M{i}\n", "black", bold=True)
 
-        # Trouver la prochaine cellule non exclue ou vide dans la colonne M
+        # Find the next non-excluded or empty cell in column M
         i += 1
         next_cell_value = worksheet.Range(f"M{i}").Value
 
-        # Parcourir les cellules jusqu'à trouver une cellule non exclue ou vide
+        # Scroll through the cells until you find a non-excluded or empty cell
         while next_cell_value in values_to_skip:
             i += 1
             next_cell_value = worksheet.Range(f"M{i}").Value
 
-        # Vérifier si la cellule trouvée est vide
+        # Check if the cell found is empty
         if next_cell_value is None or next_cell_value == "":
             last_iteration = True
             print("Dernière itération")
@@ -314,56 +314,56 @@ def second_part(start_iteration):
 
         try:
             print ("Le fichier Excel est en cours d'actualisation")
-            # Actualiser toutes les données du fichier Excel
+            # Update all data in the Excel file
             workbook.RefreshAll()
 
-            # Attendre que l'actualisation des données soit terminée avant de continuer
+            # Wait until the data refresh is complete before continuing
             wait_for_sheets_to_refresh(excel)
         except Exception as e:
             print(e)
-            sys.stdout.insert_colored_text(f"Vérifiez le fichier PDF, il y a peut-être eu un souci dans "
-                                           f"l'actualisation pour ce client.\n", "blue", bold=True)
+            sys.stdout.insert_colored_text(f"Check the PDF file, there may have been a problem in "
+                                           f"updating the data for this client.\n", "blue", bold=True)
         finally:
             print("The 'try except' is finished")
-        # Exécuter la macro "Publication"
+        # Run the "Publication" macro
         try:
-            print("La publication du PDF est en cours, votre ordinateur risque d'être ralenti")
+            print("The PDF is being published, your computer may be slowed down")
             excel.Application.Run("Publication")
         except Exception as e:
             pass
 
-        # Attendre que la publication du fichier pdf soit terminée avant de continuer
+        # Wait for the pdf file to be published before continuing
         attendre_excel(excel)
 
-        # Fermer Excel
+        # Close Excel
         excel_ferme = False
         attempt = 0
         while not excel_ferme and attempt < 2:
             excel_ferme = fermer_excel()
             attempt += 1
-            time.sleep(5)  # Attendre 5 secondes avant de vérifier à nouveau
+            time.sleep(5)  # Wait 5 seconds before checking again
 
         if not excel_ferme:
-            print("Impossible de fermer Excel après 2 tentatives ou Excel n'était pas ouvert")
+            print("Could not close Excel after 2 attempts or Excel was not open")
 
-        # Supprimer le fichier créé dans C:\\TBM
+        # Delete the file created in C:\\TBM
         try:
             os.remove(destination_folder)
-            print(f"Fichier supprimé: {destination_folder}")
+            print(f"File deleted: {destination_folder}")
         except OSError as e:
-            print(f"Erreur lors de la suppression du fichier: {destination_folder}")
+            print(f"Error when deleting the file: {destination_folder}")
             print(e)
 
-        # Vérifier si c'est la dernière itération
+        # Check if this is the last iteration
         if last_iteration:
-            sys.stdout.insert_colored_text(f"L'exécution du Script est terminée, vous pouvez fermer "
-                                           f"l'interface GUI en cliquant sur la croix\n", "red", bold=True)
+            sys.stdout.insert_colored_text(f"The execution of the Script is finished, you can close"
+                                           f"the software by clicking on the cross\n", "red", bold=True)
             break
 
-            # Fermer Excel si c'était la dernière itération
+            # Close Excel if this was the last iteration
         if last_iteration:
-            workbook.Close(SaveChanges=False)  # Fermer le classeur sans enregistrer les modifications
-            excel.Quit()  # Fermer Excel
+            workbook.Close(SaveChanges=False)  # Close the workbook without saving changes
+            excel.Quit()  # Close Excel
 
 if __name__ == "__main__":
     create_gui()  
