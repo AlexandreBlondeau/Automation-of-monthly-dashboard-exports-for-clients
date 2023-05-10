@@ -69,7 +69,7 @@ python -m pip install XXXX
 Si vous disposez du fichier exécutable, exécutez seulement le « .exe » et passer à l’étape 2.
 
 1. Assurez-vous que toutes les dépendances sont installées.
-Exécutez le fichier Export_Client_.py pour démarrer le programme.
+Exécutez le fichier Script.py pour démarrer le programme.
 
 2. L'interface utilisateur apparaîtra, indiquant la cellule où la première itération commence. Par défaut, il s'agit de la cellule M2.
 Entrez la cellule de départ souhaitée et cliquez sur "Démarrer le script".
