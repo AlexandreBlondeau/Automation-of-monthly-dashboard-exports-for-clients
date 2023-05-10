@@ -69,7 +69,7 @@ python -m pip install XXXX
 If you have the executable file, run only the ".exe" and go to step 2.
 
 1. Make sure all dependencies are installed.
-Run the file Export_Client_.py to start the program.
+Run the file Script.py to start the program.
 
 2. The user interface will appear, indicating the cell where the first iteration starts. By default, this is cell M2.
 Enter the desired starting cell and click "Start Script".
