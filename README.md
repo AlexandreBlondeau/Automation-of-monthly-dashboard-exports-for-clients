@@ -29,7 +29,7 @@ The "second_part" function takes as input a start_iteration parameter, which det
 5. Defines the path of the source Excel file_path and the path of the destination folder.
 6. Starts a while loop to perform the operations on the cells in column M, starting with the iteration indicated by start_iteration.
 7. Check if the folder "TBM" exists. If it does not exist, create it. Otherwise, displays a message indicating that the folder already exists.
-8. Copies the source Excel file to the destination folder to perform the following actions locally on the "C:³" drive.
+8. Copies the source Excel file to the destination folder to perform the following actions locally on the "C:\" drive.
 9. Launches the Excel application in invisible mode, disables Excel alerts and opens the copied file in read/write mode.
 10. Select the "Settings and Instructions" sheet of the Excel file.
 11. Retrieves the values to be excluded during the first iteration (which is defined by the user in the GUI).
