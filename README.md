@@ -26,7 +26,7 @@ The "second_part" function takes as input a start_iteration parameter, which det
 2. Defines the path of the Excel file to manipulate: file_path.
 3. Checks if the Excel file already exists, and deletes it if it exists. If not, displays a message indicating that the file does not exist.
 4. Closes the Excel application with a maximum of two attempts.
-5. Defines the path of the source Excel file_path and the path of the destination folder_folder.
+5. Defines the path of the source Excel file_path and the path of the destination folder.
 6. Starts a while loop to perform the operations on the cells in column M, starting with the iteration indicated by start_iteration.
 7. Check if the folder "TBM" exists. If it does not exist, create it. Otherwise, displays a message indicating that the folder already exists.
 8. Copies the source Excel file to the destination folder to perform the following actions locally on the "C:³" drive.
