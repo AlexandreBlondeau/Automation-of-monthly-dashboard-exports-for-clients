@@ -83,7 +83,7 @@ The program will read the values in column M and process them iteratively, exclu
   * Communication error with Excel: (-2147023174, 'The RPC server is not available.', None, None)
 
 I added at the end of this document an appendix where I explain how to solve this problem to the IT team. If you haven't solved this problem yet, close the script and check if Excel is closed in the task manager. Then retry the script a little later at the iteration where it stopped via the GUI.  
-Make sure that the Excel file copied to the original path is not open on another computer on the network while the program is running, as this can cause file locking problems and may prevent the file from being copied to the local "C:³" drive.
+Make sure that the Excel file copied to the original path is not open on another computer on the network while the program is running, as this can cause file locking problems and may prevent the file from being copied to the local "C:\" drive.
 If you encounter communication errors with Excel, the program will wait and retry automatically. This may be due to connection problems with Excel or synchronization problems.
 
 **Appendix**  
