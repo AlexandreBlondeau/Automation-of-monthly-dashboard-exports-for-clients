@@ -42,7 +42,7 @@ The "second_part" function takes as input a start_iteration parameter, which det
 18. Refreshes all data in the Excel file and waits for the refresh to be completed.
 19. Runs the "Publish" VBA macro and waits for the PDF file to be published.
 20. Closes the Excel application with a maximum of two attempts.
-21. Deletes the Excel file created in the "C:³BM" folder.
+21. Deletes the Excel file created in the "C:\TBM" folder.
 22. Checks if this is the last iteration. If it is, displays a message indicating the end of the iterations and exits the while loop.
 23. Closes the Excel workbook without saving the changes and exits the Excel application if this was the last iteration.
 
